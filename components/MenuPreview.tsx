@@ -58,42 +58,50 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
                   </h2>
                   <div className="space-y-5">
                     {section.items.map((dish) => (
-                      <div key={dish.id} className="flex flex-col group">
-                        <div className="flex justify-between items-baseline mb-1">
-                          <h3 className={`text-lg font-bold ${theme.bodyFont} ${dish.highlight ? 'text-primary' : ''}`}>
-                            {dish.name}
-                          </h3>
-                          {isModern && <div className="flex-1 border-b border-dotted border-current mx-3 opacity-40 relative -top-1"></div>}
-                          <span className={`text-lg font-bold ${theme.bodyFont} whitespace-nowrap`}>
-                            {dish.price}
-                          </span>
-                        </div>
-                        
-                        <div className="pr-4">
-                            <p className={`text-sm opacity-90 ${theme.bodyFont} leading-relaxed`}>
-                                {dish.description}
-                            </p>
+                      <div key={dish.id} className="flex gap-4 group">
+                        <div className="flex-1 flex flex-col">
+                            <div className="flex justify-between items-baseline mb-1">
+                              <h3 className={`text-lg font-bold ${theme.bodyFont} ${dish.highlight ? 'text-primary' : ''}`}>
+                                {dish.name}
+                              </h3>
+                              {isModern && <div className="flex-1 border-b border-dotted border-current mx-3 opacity-40 relative -top-1"></div>}
+                              <span className={`text-lg font-bold ${theme.bodyFont} whitespace-nowrap`}>
+                                {dish.price}
+                              </span>
+                            </div>
                             
-                            {/* Tags & Note Row */}
-                            {(dish.dietaryTags?.length || dish.dietaryNote) ? (
-                                <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                                    {dish.dietaryTags?.map(tagId => (
-                                        <span key={tagId} className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
-                                            isModern 
-                                            ? 'bg-slate-800 text-white border-slate-800'
-                                            : 'bg-transparent border-current opacity-70'
-                                        }`}>
-                                            {getTagLabel(tagId)}
-                                        </span>
-                                    ))}
-                                    {dish.dietaryNote && (
-                                        <span className="text-xs italic opacity-70">
-                                            * {dish.dietaryNote}
-                                        </span>
-                                    )}
-                                </div>
-                            ) : null}
+                            <div className="pr-2">
+                                <p className={`text-sm opacity-90 ${theme.bodyFont} leading-relaxed`}>
+                                    {dish.description}
+                                </p>
+                                
+                                {/* Tags & Note Row */}
+                                {(dish.dietaryTags?.length || dish.dietaryNote) ? (
+                                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                                        {dish.dietaryTags?.map(tagId => (
+                                            <span key={tagId} className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                                                isModern 
+                                                ? 'bg-slate-800 text-white border-slate-800'
+                                                : 'bg-transparent border-current opacity-70'
+                                            }`}>
+                                                {getTagLabel(tagId)}
+                                            </span>
+                                        ))}
+                                        {dish.dietaryNote && (
+                                            <span className="text-xs italic opacity-70">
+                                                * {dish.dietaryNote}
+                                            </span>
+                                        )}
+                                    </div>
+                                ) : null}
+                            </div>
                         </div>
+
+                        {dish.image && (
+                            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-md overflow-hidden bg-black/5 self-start shadow-sm">
+                                <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
+                            </div>
+                        )}
                       </div>
                     ))}
                   </div>

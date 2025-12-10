@@ -51,7 +51,8 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
       price: '$0',
       ingredients: '',
       dietaryTags: [],
-      dietaryNote: ''
+      dietaryNote: '',
+      image: undefined
     };
     setState(prev => ({
       ...prev,
@@ -71,6 +72,16 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
         } : s
       )
     }));
+  };
+
+  const handleImageUpload = (sectionId: string, dishId: string, file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        updateDish(sectionId, dishId, 'image', reader.result as string);
+    };
+    if (file) {
+        reader.readAsDataURL(file);
+    }
   };
 
   const toggleDishTag = (sectionId: string, dishId: string, tagId: string) => {
@@ -330,6 +341,35 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
                                 <SparklesIcon className="w-5 h-5" />
                             </button>
                          </div>
+                      </div>
+
+                      {/* Image Upload */}
+                      <div className="flex items-center gap-3 mt-2 mb-2">
+                        {dish.image ? (
+                          <div className="relative group inline-block">
+                             <img src={dish.image} alt="Preview" className="w-16 h-16 object-cover rounded-md border border-slate-200" />
+                             <button
+                               onClick={() => updateDish(section.id, dish.id, 'image', undefined)}
+                               className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition"
+                               title="Remove Image"
+                             >
+                               <TrashIcon className="w-3 h-3" />
+                             </button>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer flex items-center gap-2 text-xs text-slate-500 hover:text-primary transition bg-slate-50 border border-slate-200 rounded px-3 py-2 border-dashed hover:border-solid">
+                             <PhotoIcon className="w-4 h-4" />
+                             <span>Upload Photo</span>
+                             <input
+                               type="file"
+                               accept="image/*"
+                               className="hidden"
+                               onChange={(e) => {
+                                 if (e.target.files?.[0]) handleImageUpload(section.id, dish.id, e.target.files[0]);
+                               }}
+                             />
+                          </label>
+                        )}
                       </div>
 
                       {/* Dietary Tags */}

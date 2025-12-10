@@ -7,6 +7,7 @@ export interface Dish {
   ingredients?: string;
   dietaryTags?: string[];
   dietaryNote?: string;
+  image?: string; // Base64 Data URL
 }
 
 export interface MenuSection {
