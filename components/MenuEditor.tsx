@@ -168,12 +168,27 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
 
   const applyTheme = (type: ThemeType) => {
     let newTheme = { ...state.theme, type, backgroundImage: undefined };
-    if (type === ThemeType.MODERN) {
-      newTheme = { ...newTheme, textColor: '#0f172a', backgroundColor: '#f8fafc', headingFont: 'font-sans', bodyFont: 'font-sans' };
-    } else if (type === ThemeType.CLASSIC) {
-      newTheme = { ...newTheme, textColor: '#1e293b', backgroundColor: '#ffffff', headingFont: 'font-serif', bodyFont: 'font-sans' };
-    } else if (type === ThemeType.RUSTIC) {
-      newTheme = { ...newTheme, textColor: '#3f2e3e', backgroundColor: '#fef3c7', headingFont: 'font-serif', bodyFont: 'font-serif' };
+    switch (type) {
+        case ThemeType.CLASSIC:
+            newTheme = { ...newTheme, textColor: '#1e293b', backgroundColor: '#ffffff', headingFont: 'font-serif', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.MODERN:
+            newTheme = { ...newTheme, textColor: '#0f172a', backgroundColor: '#f8fafc', headingFont: 'font-sans', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.RUSTIC:
+            newTheme = { ...newTheme, textColor: '#422006', backgroundColor: '#fef3c7', headingFont: 'font-serif', bodyFont: 'font-serif' };
+            break;
+        case ThemeType.MIDNIGHT:
+            newTheme = { ...newTheme, textColor: '#f1f5f9', backgroundColor: '#0f172a', headingFont: 'font-sans', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.JAZZ:
+            newTheme = { ...newTheme, textColor: '#fbbf24', backgroundColor: '#1c1917', headingFont: 'font-serif', bodyFont: 'font-serif' };
+            break;
+        case ThemeType.OCEAN:
+            newTheme = { ...newTheme, textColor: '#164e63', backgroundColor: '#ecfeff', headingFont: 'font-sans', bodyFont: 'font-serif' };
+            break;
+        default:
+            break;
     }
     setState(prev => ({ ...prev, theme: newTheme }));
   };
@@ -378,27 +393,90 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
           <div className="space-y-6">
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wide">Preset Themes</h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {/* Classic */}
                 <button 
                   onClick={() => applyTheme(ThemeType.CLASSIC)}
-                  className={`p-4 border rounded-lg text-left hover:shadow-md transition ${state.theme.type === ThemeType.CLASSIC ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group ${state.theme.type === ThemeType.CLASSIC ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
                 >
-                  <div className="font-serif text-lg mb-1">Classic</div>
-                  <div className="text-xs text-slate-500">Elegant serif fonts, white background.</div>
+                   <div className="absolute inset-0 bg-white opacity-20 group-hover:opacity-10 transition"></div>
+                   <div className="relative z-10">
+                      <div className="font-serif text-slate-900 font-bold mb-1">Classic</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full border border-slate-200 bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-slate-800"></div>
+                      </div>
+                   </div>
                 </button>
+
+                {/* Modern */}
                 <button 
                   onClick={() => applyTheme(ThemeType.MODERN)}
-                  className={`p-4 border rounded-lg text-left hover:shadow-md transition ${state.theme.type === ThemeType.MODERN ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group ${state.theme.type === ThemeType.MODERN ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
                 >
-                  <div className="font-sans font-bold text-lg mb-1">Modern</div>
-                  <div className="text-xs text-slate-500">Clean sans-serif, slate colors.</div>
+                   <div className="relative z-10">
+                      <div className="font-sans text-slate-900 font-bold mb-1">Modern</div>
+                       <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full border border-slate-200 bg-slate-50"></div>
+                          <div className="w-4 h-4 rounded-full bg-slate-900"></div>
+                      </div>
+                   </div>
                 </button>
+
+                {/* Rustic */}
                 <button 
                   onClick={() => applyTheme(ThemeType.RUSTIC)}
-                  className={`p-4 border rounded-lg text-left hover:shadow-md transition ${state.theme.type === ThemeType.RUSTIC ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group ${state.theme.type === ThemeType.RUSTIC ? 'ring-2 ring-primary border-primary' : 'border-slate-200'}`}
                 >
-                  <div className="font-serif italic text-lg mb-1">Rustic</div>
-                  <div className="text-xs text-slate-500">Warm tones, earthy vibe.</div>
+                    <div className="relative z-10">
+                      <div className="font-serif text-amber-900 italic font-bold mb-1">Rustic</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-amber-100"></div>
+                          <div className="w-4 h-4 rounded-full bg-amber-900"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Midnight */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.MIDNIGHT)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-slate-900 ${state.theme.type === ThemeType.MIDNIGHT ? 'ring-2 ring-primary border-primary' : 'border-slate-800'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-sans text-white font-bold mb-1">Midnight</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-slate-900 border border-slate-700"></div>
+                          <div className="w-4 h-4 rounded-full bg-slate-100"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Jazz */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.JAZZ)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-stone-900 ${state.theme.type === ThemeType.JAZZ ? 'ring-2 ring-primary border-primary' : 'border-stone-800'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-amber-400 font-bold mb-1">Jazz</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-stone-900 border border-stone-700"></div>
+                          <div className="w-4 h-4 rounded-full bg-amber-400"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Ocean */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.OCEAN)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-cyan-50 ${state.theme.type === ThemeType.OCEAN ? 'ring-2 ring-primary border-primary' : 'border-cyan-100'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-cyan-900 font-bold mb-1">Ocean</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-cyan-50 border border-cyan-200"></div>
+                          <div className="w-4 h-4 rounded-full bg-cyan-900"></div>
+                      </div>
+                   </div>
                 </button>
               </div>
             </div>

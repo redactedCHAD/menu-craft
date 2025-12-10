@@ -39,7 +39,7 @@ const App: React.FC = () => {
       <header className="bg-slate-900 text-white h-14 flex items-center justify-between px-6 shrink-0 print-hide z-20 shadow-md">
         <div className="flex items-center space-x-2">
             <span className="text-2xl">🧞‍♂️</span>
-            <h1 className="font-bold text-lg tracking-wide">Gourmet Genie</h1>
+            <h1 className="font-bold text-lg tracking-wide">MENU CRAFT</h1>
         </div>
         <div className="flex items-center space-x-4">
              {!hasKey && (

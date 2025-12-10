@@ -24,7 +24,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
     ? "bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-2xl mx-auto my-8 max-w-2xl rounded-sm"
     : "p-8 md:p-12 mx-auto max-w-2xl h-full";
 
-  const isModern = theme.type === ThemeType.MODERN;
+  const isModern = [ThemeType.MODERN, ThemeType.MIDNIGHT, ThemeType.OCEAN].includes(theme.type);
   const isRustic = theme.type === ThemeType.RUSTIC;
 
   const getTagLabel = (id: string) => DIETARY_TAGS.find(t => t.id === id)?.label || id;
@@ -40,7 +40,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
           
           <div className={`${overlayClass} flex flex-col h-full`}>
             {/* Header */}
-            <div className={`text-center mb-10 border-b-2 pb-6 ${isModern ? 'border-primary' : 'border-gray-300'}`}>
+            <div className={`text-center mb-10 border-b-2 pb-6 ${isModern ? 'border-primary' : 'border-current opacity-80'}`}>
               <h1 className={`text-5xl md:text-6xl font-bold mb-2 ${theme.headingFont} tracking-tight`}>
                 {info.name}
               </h1>
@@ -53,7 +53,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
             <div className="flex-grow space-y-8">
               {sections.map((section) => (
                 <div key={section.id} className="mb-6">
-                  <h2 className={`text-2xl md:text-3xl font-bold mb-4 text-center uppercase tracking-wider ${theme.headingFont} ${isRustic ? 'border-y py-2 border-gray-400 inline-block w-full' : 'text-primary'}`}>
+                  <h2 className={`text-2xl md:text-3xl font-bold mb-4 text-center uppercase tracking-wider ${theme.headingFont} ${isRustic ? 'border-y py-2 border-current inline-block w-full' : 'text-primary'}`}>
                     {section.title}
                   </h2>
                   <div className="space-y-5">
@@ -63,7 +63,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
                           <h3 className={`text-lg font-bold ${theme.bodyFont} ${dish.highlight ? 'text-primary' : ''}`}>
                             {dish.name}
                           </h3>
-                          {isModern && <div className="flex-1 border-b border-dotted border-gray-400 mx-3 opacity-40 relative -top-1"></div>}
+                          {isModern && <div className="flex-1 border-b border-dotted border-current mx-3 opacity-40 relative -top-1"></div>}
                           <span className={`text-lg font-bold ${theme.bodyFont} whitespace-nowrap`}>
                             {dish.price}
                           </span>
@@ -102,7 +102,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
             </div>
 
             {/* Footer */}
-            <div className="mt-auto pt-8 text-center text-sm opacity-60 border-t border-gray-300 flex flex-col items-center gap-2">
+            <div className="mt-auto pt-8 text-center text-sm opacity-60 border-t border-current flex flex-col items-center gap-2">
               <p>{info.contact}</p>
               {info.websiteUrl && (
                   <p className="text-xs">{info.websiteUrl.replace('https://', '')}</p>

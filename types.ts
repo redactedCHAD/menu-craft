@@ -27,6 +27,9 @@ export enum ThemeType {
   MODERN = 'MODERN',
   CLASSIC = 'CLASSIC',
   RUSTIC = 'RUSTIC',
+  MIDNIGHT = 'MIDNIGHT',
+  JAZZ = 'JAZZ',
+  OCEAN = 'OCEAN',
   CUSTOM_AI = 'CUSTOM_AI',
 }
 
