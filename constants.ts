@@ -61,6 +61,58 @@ export const DEFAULT_SECTIONS = [
         dietaryNote: ''
       },
     ]
+  },
+  {
+    id: 's3',
+    title: 'Desserts',
+    items: [
+      { 
+        id: 'd5', 
+        name: 'Tiramisu', 
+        description: 'Classic Italian dessert made of ladyfingers dipped in coffee.', 
+        price: '$14', 
+        highlight: false,
+        ingredients: 'Mascarpone, Espresso, Ladyfingers, Cocoa',
+        dietaryTags: ['V'],
+        dietaryNote: 'Contains caffeine'
+      },
+      { 
+        id: 'd6', 
+        name: 'Lemon Sorbet', 
+        description: 'Refreshing frozen dessert made from sweetened water and fruit purée.', 
+        price: '$10', 
+        highlight: false,
+        ingredients: 'Lemon, Sugar, Water',
+        dietaryTags: ['V', 'VG', 'GF', 'DF'],
+        dietaryNote: ''
+      },
+    ]
+  },
+  {
+    id: 's4',
+    title: 'Drinks',
+    items: [
+      { 
+        id: 'd7', 
+        name: 'Signature Cocktail', 
+        description: 'A secret blend of premium spirits and fresh fruit juices.', 
+        price: '$18', 
+        highlight: true,
+        ingredients: 'Gin, Elderflower, Lemon, Sparkling Water',
+        dietaryTags: ['VG', 'GF'],
+        dietaryNote: 'Contains alcohol'
+      },
+      { 
+        id: 'd8', 
+        name: 'Italian Espresso', 
+        description: 'Rich and intense single shot of premium coffee.', 
+        price: '$5', 
+        highlight: false,
+        ingredients: 'Coffee Beans',
+        dietaryTags: ['V', 'VG', 'GF', 'DF', 'NF'],
+        dietaryNote: ''
+      },
+    ]
   }
 ];
 
@@ -79,6 +131,8 @@ export const INITIAL_STATE: AppState = {
     headingFont: 'font-serif',
     bodyFont: 'font-sans',
     backgroundColor: '#ffffff',
+    dishNameSize: 'medium',
+    dishDescriptionSize: 'medium',
   }
 };
 

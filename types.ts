@@ -31,8 +31,16 @@ export enum ThemeType {
   MIDNIGHT = 'MIDNIGHT',
   JAZZ = 'JAZZ',
   OCEAN = 'OCEAN',
+  VINTAGE = 'VINTAGE',
+  MINIMALIST = 'MINIMALIST',
+  TROPICAL = 'TROPICAL',
+  ELEGANT = 'ELEGANT',
+  FUTURISTIC = 'FUTURISTIC',
+  CAFE = 'CAFE',
   CUSTOM_AI = 'CUSTOM_AI',
 }
+
+export type FontSize = 'small' | 'medium' | 'large';
 
 export interface MenuTheme {
   type: ThemeType;
@@ -42,6 +50,8 @@ export interface MenuTheme {
   bodyFont: string;
   backgroundColor: string; // Fallback
   generatedPrompt?: string;
+  dishNameSize: FontSize;
+  dishDescriptionSize: FontSize;
 }
 
 export interface AppState {

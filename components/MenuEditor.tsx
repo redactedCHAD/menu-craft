@@ -22,10 +22,10 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
   };
 
   // Handlers for Sections
-  const addSection = () => {
+  const addSection = (title: string = 'New Section') => {
     const newSection: MenuSection = {
       id: Date.now().toString(),
-      title: 'New Section',
+      title: title,
       items: []
     };
     setState(prev => ({ ...prev, sections: [...prev.sections, newSection] }));
@@ -197,6 +197,24 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
             break;
         case ThemeType.OCEAN:
             newTheme = { ...newTheme, textColor: '#164e63', backgroundColor: '#ecfeff', headingFont: 'font-sans', bodyFont: 'font-serif' };
+            break;
+        case ThemeType.VINTAGE:
+            newTheme = { ...newTheme, textColor: '#4a4e69', backgroundColor: '#f2e9e4', headingFont: 'font-serif', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.MINIMALIST:
+            newTheme = { ...newTheme, textColor: '#000000', backgroundColor: '#ffffff', headingFont: 'font-sans', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.TROPICAL:
+            newTheme = { ...newTheme, textColor: '#064e3b', backgroundColor: '#ecfccb', headingFont: 'font-serif', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.ELEGANT:
+            newTheme = { ...newTheme, textColor: '#f0fdf4', backgroundColor: '#064e3b', headingFont: 'font-serif', bodyFont: 'font-serif' };
+            break;
+        case ThemeType.FUTURISTIC:
+            newTheme = { ...newTheme, textColor: '#22d3ee', backgroundColor: '#09090b', headingFont: 'font-sans', bodyFont: 'font-sans' };
+            break;
+        case ThemeType.CAFE:
+            newTheme = { ...newTheme, textColor: '#3f2e22', backgroundColor: '#fffbeb', headingFont: 'font-serif', bodyFont: 'font-sans' };
             break;
         default:
             break;
@@ -420,12 +438,27 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
                 </div>
               </div>
             ))}
-             <button 
-              onClick={addSection}
-              className="w-full py-3 bg-slate-800 text-white rounded-md hover:bg-slate-700 transition font-medium shadow-md"
-            >
-              Add New Section
-            </button>
+             <div className="flex gap-2">
+                <button 
+                  onClick={() => addSection('New Section')}
+                  className="flex-1 py-3 bg-slate-800 text-white rounded-md hover:bg-slate-700 transition font-medium shadow-md flex justify-center items-center"
+                >
+                  <PlusIcon className="w-4 h-4 mr-1" />
+                  Add Section
+                </button>
+                <button 
+                  onClick={() => addSection('Desserts')}
+                  className="flex-1 py-3 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition font-medium shadow-md"
+                >
+                  Add Desserts
+                </button>
+                 <button 
+                  onClick={() => addSection('Drinks')}
+                  className="flex-1 py-3 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition font-medium shadow-md"
+                >
+                  Add Drinks
+                </button>
+             </div>
           </div>
         )}
 
@@ -518,7 +551,128 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ state, setState }) => {
                       </div>
                    </div>
                 </button>
+
+                {/* Vintage */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.VINTAGE)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-[#f2e9e4] ${state.theme.type === ThemeType.VINTAGE ? 'ring-2 ring-primary border-primary' : 'border-[#e0d6d0]'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-[#4a4e69] font-bold mb-1">Vintage</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-[#f2e9e4] border border-stone-300"></div>
+                          <div className="w-4 h-4 rounded-full bg-[#4a4e69]"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Minimalist */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.MINIMALIST)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-white ${state.theme.type === ThemeType.MINIMALIST ? 'ring-2 ring-primary border-primary' : 'border-gray-200'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-sans text-black font-bold mb-1">Minimalist</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-white border border-gray-300"></div>
+                          <div className="w-4 h-4 rounded-full bg-black"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Tropical */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.TROPICAL)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-[#ecfccb] ${state.theme.type === ThemeType.TROPICAL ? 'ring-2 ring-primary border-primary' : 'border-[#d9f99d]'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-[#064e3b] font-bold mb-1">Tropical</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-[#ecfccb] border border-[#bef264]"></div>
+                          <div className="w-4 h-4 rounded-full bg-[#064e3b]"></div>
+                      </div>
+                   </div>
+                </button>
+
+                 {/* Elegant */}
+                 <button 
+                  onClick={() => applyTheme(ThemeType.ELEGANT)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-[#064e3b] ${state.theme.type === ThemeType.ELEGANT ? 'ring-2 ring-primary border-primary' : 'border-[#065f46]'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-[#f0fdf4] font-bold mb-1">Elegant</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-[#064e3b] border border-[#047857]"></div>
+                          <div className="w-4 h-4 rounded-full bg-[#f0fdf4]"></div>
+                      </div>
+                   </div>
+                </button>
+
+                 {/* Futuristic */}
+                 <button 
+                  onClick={() => applyTheme(ThemeType.FUTURISTIC)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-[#09090b] ${state.theme.type === ThemeType.FUTURISTIC ? 'ring-2 ring-primary border-primary' : 'border-[#27272a]'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-sans text-[#22d3ee] font-bold mb-1">Futuristic</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-[#09090b] border border-[#27272a]"></div>
+                          <div className="w-4 h-4 rounded-full bg-[#22d3ee]"></div>
+                      </div>
+                   </div>
+                </button>
+
+                {/* Cafe */}
+                <button 
+                  onClick={() => applyTheme(ThemeType.CAFE)}
+                  className={`p-3 border rounded-lg text-left hover:shadow-md transition relative overflow-hidden group bg-[#fffbeb] ${state.theme.type === ThemeType.CAFE ? 'ring-2 ring-primary border-primary' : 'border-[#fef3c7]'}`}
+                >
+                    <div className="relative z-10">
+                      <div className="font-serif text-[#3f2e22] font-bold mb-1">Café</div>
+                      <div className="flex gap-1">
+                          <div className="w-4 h-4 rounded-full bg-[#fffbeb] border border-[#fde68a]"></div>
+                          <div className="w-4 h-4 rounded-full bg-[#3f2e22]"></div>
+                      </div>
+                   </div>
+                </button>
               </div>
+            </div>
+
+            {/* Typography Sizing Controls */}
+            <div className="border-t border-slate-200 pt-6">
+                <h3 className="text-sm font-bold text-slate-900 mb-4 uppercase tracking-wide">Typography Sizing</h3>
+                
+                <div className="grid grid-cols-1 gap-4">
+                    <div>
+                        <label className="text-xs font-semibold text-slate-500 block mb-2">Dish Name Size</label>
+                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                            {(['small', 'medium', 'large'] as const).map((size) => (
+                                <button
+                                    key={size}
+                                    onClick={() => setState(p => ({...p, theme: {...p.theme, dishNameSize: size}}))}
+                                    className={`flex-1 py-1 text-xs capitalize rounded-md transition ${state.theme.dishNameSize === size ? 'bg-white shadow text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    {size}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="text-xs font-semibold text-slate-500 block mb-2">Description Size</label>
+                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                            {(['small', 'medium', 'large'] as const).map((size) => (
+                                <button
+                                    key={size}
+                                    onClick={() => setState(p => ({...p, theme: {...p.theme, dishDescriptionSize: size}}))}
+                                    className={`flex-1 py-1 text-xs capitalize rounded-md transition ${state.theme.dishDescriptionSize === size ? 'bg-white shadow text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    {size}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className="border-t border-slate-200 pt-6">

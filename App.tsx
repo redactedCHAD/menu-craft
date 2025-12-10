@@ -69,7 +69,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Preview Panel (Right) */}
-        <div className="flex-1 bg-slate-100 relative h-full overflow-hidden">
+        <div className="flex-1 bg-slate-100 relative h-full overflow-hidden print:bg-white print:overflow-visible print:h-auto">
            <MenuPreview data={state} />
         </div>
       </main>

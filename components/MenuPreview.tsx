@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppState, ThemeType } from '../types';
+import { AppState, ThemeType, FontSize } from '../types';
 import { DIETARY_TAGS } from '../constants';
 
 interface MenuPreviewProps {
@@ -17,28 +17,54 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-  };
+    printColorAdjust: 'exact',
+    WebkitPrintColorAdjust: 'exact',
+  } as React.CSSProperties;
 
   // Overlay for readability if using background image
+  // Adjusted for print to remove excessive shadows and margins
   const overlayClass = theme.backgroundImage 
-    ? "bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-2xl mx-auto my-8 max-w-2xl rounded-sm"
-    : "p-8 md:p-12 mx-auto max-w-2xl h-full";
+    ? "bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-2xl mx-auto my-8 max-w-2xl rounded-sm print:shadow-none print:my-0 print:w-full print:max-w-none print:rounded-none"
+    : "p-8 md:p-12 mx-auto max-w-2xl h-full print:max-w-none print:w-full print:p-8 print:h-auto";
 
-  const isModern = [ThemeType.MODERN, ThemeType.MIDNIGHT, ThemeType.OCEAN].includes(theme.type);
+  const isModern = [
+    ThemeType.MODERN, 
+    ThemeType.MIDNIGHT, 
+    ThemeType.OCEAN, 
+    ThemeType.MINIMALIST, 
+    ThemeType.FUTURISTIC
+  ].includes(theme.type);
+  
   const isRustic = theme.type === ThemeType.RUSTIC;
 
   const getTagLabel = (id: string) => DIETARY_TAGS.find(t => t.id === id)?.label || id;
 
+  const getNameSizeClass = (size?: FontSize) => {
+    switch(size) {
+        case 'small': return 'text-base';
+        case 'large': return 'text-xl';
+        default: return 'text-lg';
+    }
+  };
+
+  const getDescSizeClass = (size?: FontSize) => {
+    switch(size) {
+        case 'small': return 'text-xs';
+        case 'large': return 'text-base';
+        default: return 'text-sm';
+    }
+  };
+
   return (
-    <div className="w-full h-full min-h-[800px] overflow-auto bg-slate-200 p-4 md:p-8 flex items-center justify-center print-hide">
+    <div className="w-full h-full min-h-[800px] overflow-auto bg-slate-200 p-4 md:p-8 flex items-center justify-center print:bg-white print:p-0 print:block print:overflow-visible print:h-auto print:min-h-0">
       <div 
         id="menu-print-area"
-        className={`w-[210mm] min-h-[297mm] shadow-lg relative transition-all duration-300 print-only`}
+        className={`w-[210mm] min-h-[297mm] shadow-lg relative transition-all duration-300 mx-auto print:w-full print:absolute print:top-0 print:left-0 print:m-0 print:shadow-none`}
         style={containerStyle}
       >
-        <div className={`h-full w-full ${theme.backgroundImage ? 'p-6 flex items-center justify-center' : ''}`}>
+        <div className={`h-full w-full ${theme.backgroundImage ? 'p-6 print:p-0 flex items-center justify-center print:block' : ''}`}>
           
-          <div className={`${overlayClass} flex flex-col h-full`}>
+          <div className={`${overlayClass} flex flex-col h-full print:h-auto`}>
             {/* Header */}
             <div className={`text-center mb-10 border-b-2 pb-6 ${isModern ? 'border-primary' : 'border-current opacity-80'}`}>
               <h1 className={`text-5xl md:text-6xl font-bold mb-2 ${theme.headingFont} tracking-tight`}>
@@ -52,26 +78,26 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
             {/* Sections */}
             <div className="flex-grow space-y-8">
               {sections.map((section) => (
-                <div key={section.id} className="mb-6">
+                <div key={section.id} className="mb-6 break-inside-avoid">
                   <h2 className={`text-2xl md:text-3xl font-bold mb-4 text-center uppercase tracking-wider ${theme.headingFont} ${isRustic ? 'border-y py-2 border-current inline-block w-full' : 'text-primary'}`}>
                     {section.title}
                   </h2>
                   <div className="space-y-5">
                     {section.items.map((dish) => (
-                      <div key={dish.id} className="flex gap-4 group">
+                      <div key={dish.id} className="flex gap-4 group break-inside-avoid">
                         <div className="flex-1 flex flex-col">
                             <div className="flex justify-between items-baseline mb-1">
-                              <h3 className={`text-lg font-bold ${theme.bodyFont} ${dish.highlight ? 'text-primary' : ''}`}>
+                              <h3 className={`${getNameSizeClass(theme.dishNameSize)} font-bold ${theme.bodyFont} ${dish.highlight ? 'text-primary' : ''}`}>
                                 {dish.name}
                               </h3>
                               {isModern && <div className="flex-1 border-b border-dotted border-current mx-3 opacity-40 relative -top-1"></div>}
-                              <span className={`text-lg font-bold ${theme.bodyFont} whitespace-nowrap`}>
+                              <span className={`${getNameSizeClass(theme.dishNameSize)} font-bold ${theme.bodyFont} whitespace-nowrap`}>
                                 {dish.price}
                               </span>
                             </div>
                             
                             <div className="pr-2">
-                                <p className={`text-sm opacity-90 ${theme.bodyFont} leading-relaxed`}>
+                                <p className={`${getDescSizeClass(theme.dishDescriptionSize)} opacity-90 ${theme.bodyFont} leading-relaxed`}>
                                     {dish.description}
                                 </p>
                                 
@@ -98,10 +124,11 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
                         </div>
 
                         {dish.image && (
-                            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-md overflow-hidden bg-black/5 self-start shadow-sm">
+                            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-md overflow-hidden bg-black/5 self-start shadow-sm print:hidden">
                                 <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
                             </div>
                         )}
+                        {/* Print version of image if needed, or keep hidden to save ink. Keeping visible for now but ensuring size constraints. */}
                       </div>
                     ))}
                   </div>
@@ -110,7 +137,7 @@ const MenuPreview: React.FC<MenuPreviewProps> = ({ data }) => {
             </div>
 
             {/* Footer */}
-            <div className="mt-auto pt-8 text-center text-sm opacity-60 border-t border-current flex flex-col items-center gap-2">
+            <div className="mt-auto pt-8 text-center text-sm opacity-60 border-t border-current flex flex-col items-center gap-2 break-inside-avoid">
               <p>{info.contact}</p>
               {info.websiteUrl && (
                   <p className="text-xs">{info.websiteUrl.replace('https://', '')}</p>
